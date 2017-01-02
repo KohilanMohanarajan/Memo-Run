@@ -141,6 +141,10 @@ void draw(){
           file_is_empty_error = false;
           fieerror_countdown = 30;
         }
+        textAlign(CENTER);
+        textFont(f, 20);
+        fill(255);
+        text("© 2016 Kohilan Mohanarajan", width-170,height-40);
     }
     else if (menu == 1){
         background(0);
