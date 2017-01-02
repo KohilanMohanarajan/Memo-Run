@@ -31,6 +31,9 @@ boolean question_answered = false;
 String answer = "";
 boolean corr_ans = true;
 String [] liner;
+boolean file_empty = false;
+boolean file_is_empty_error;
+int fieerror_countdown = 30;
 
 void setup(){
     size(1080, 720);
@@ -62,8 +65,8 @@ void draw(){
         }
         fill(255);
         textAlign(CENTER);
-        textFont(f);
-        text("Welcome to the game!", width/2, height/4);
+        textFont(f, 50);
+        text("Welcome to Memo Run!", width/2, height/4);
         textFont(f, 25);
         text("Choose a file to read from:", width/2, (height/3)-15);
         textAlign(LEFT);
@@ -111,8 +114,10 @@ void draw(){
         }
         for (int i = 0; i < file_list.size(); i++){
           fill(255);
-          text(i+") "+file_list.get(i).toString(), (width/2)-110, (height/3)+menubuffer);
-          menubuffer = menubuffer+60;
+          if (i < 5){
+            text(i+") "+file_list.get(i).toString(), (width/2)-110, (height/3)+menubuffer);
+            menubuffer = menubuffer+60;
+          }
         }
         menubuffer = 35;
         
@@ -125,6 +130,16 @@ void draw(){
         } else{
           file_not_found_error = false;
           fnferror_countdown = 30;
+        }
+        if (file_is_empty_error == true && fieerror_countdown > 0){
+          textAlign(CENTER);
+          textFont(f, 60);
+          fill(255,0,0);
+          text("FILE IS EMPTY, TRY AGAIN", width/2, height/8);
+          fieerror_countdown--;
+        } else{
+          file_is_empty_error = false;
+          fieerror_countdown = 30;
         }
     }
     else if (menu == 1){
@@ -159,7 +174,7 @@ void draw(){
         text("Your Answer: _________________", 40, 670);
         textFont(f, 20);
         text(answer, 200, 668);
-        textFont(f, 50);
+        textFont(f, 40);
         textAlign(CENTER);
         text("Q: "+liner[1], width/2, 340);
         
@@ -205,7 +220,9 @@ void mousePressed(){
       println(easyindex);
       println(mediumindex);
       println(hardindex);
-      menu = 1;
+      if (file_empty == false){
+        menu = 1;
+      }
     } catch (IndexOutOfBoundsException e){
       e.printStackTrace();
       file_not_found_error = true;
@@ -216,7 +233,9 @@ void mousePressed(){
       String filereader = file_list.get(1).toString();
       read_file(filereader);
       println(line_list);
-      menu = 1;
+      if (file_empty == false){
+        menu = 1;
+      }
     } catch (IndexOutOfBoundsException e){
       e.printStackTrace();
       file_not_found_error = true;
@@ -227,7 +246,9 @@ void mousePressed(){
       String filereader = file_list.get(2).toString();
       read_file(filereader);
       println(line_list);
-      menu = 1;
+      if (file_empty == false){
+        menu = 1;
+      }
     } catch (IndexOutOfBoundsException e){
       e.printStackTrace();
       file_not_found_error = true;
@@ -237,7 +258,9 @@ void mousePressed(){
       String filereader = file_list.get(3).toString();
       read_file(filereader);
       println(line_list);
-      menu = 1;
+      if (file_empty == false){
+        menu = 1;
+      }
     } catch (IndexOutOfBoundsException e){
       e.printStackTrace();
       file_not_found_error = true;
@@ -248,7 +271,9 @@ void mousePressed(){
       String filereader = file_list.get(4).toString();
       read_file(filereader);
       println(line_list);
-      menu = 1;
+      if (file_empty == false){
+        menu = 1;
+      }
     } catch (IndexOutOfBoundsException e){
       e.printStackTrace();
       file_not_found_error = true;
@@ -333,6 +358,8 @@ void reset(){
   question_answered = false;
   answer = "";
   corr_ans = true;
+  file_empty = false;
+  fieerror_countdown = 30;
   setup();
 }
 
@@ -400,12 +427,21 @@ void read_file(String filename){
         line = null;
       }
     }
-    String col_line = line_list.get(0).toString();
-    col_list = col_line.split(",");
-    line_list.remove(0);
-    easyindex = line_list.indexOf("EASY");
-    mediumindex = line_list.indexOf("MEDIUM");
-    hardindex = line_list.indexOf("HARD");
+    println(line_list.size());
+    if (line_list.size() > 1){
+      println(line_list);
+      String col_line = line_list.get(0).toString();
+      col_list = col_line.split(",");
+      line_list.remove(0);
+      easyindex = line_list.indexOf("EASY");
+      mediumindex = line_list.indexOf("MEDIUM");
+      hardindex = line_list.indexOf("HARD");
+      file_empty = false;
+    } else{
+      file_empty = true;
+      line_list = new ArrayList();
+      file_is_empty_error = true;
+    }
 }
 class Hero{
   int xpos = 540;
