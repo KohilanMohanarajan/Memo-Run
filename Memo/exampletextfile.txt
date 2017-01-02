@@ -1,0 +1,12 @@
+Thing to Remember,Question,Answer
+EASY
+math,What's 1+1?,2
+english,What comes after b?,c
+geography,What country is above the US?,Canada
+MEDIUM
+history,When was Canada created?,1867
+science,What is the Mitochondria?,The powerhouse of the cell
+Computer Science,Is Java a programming language?,yes
+misc,When was the last time the Cubs won the world series?,2016
+HARD
+metaphysical,What is the meaning of life?,idk

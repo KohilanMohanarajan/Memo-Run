@@ -111,7 +111,7 @@ void draw(){
         }
         for (int i = 0; i < file_list.size(); i++){
           fill(255);
-          text(i+") "+file_list.get(i).toString(), (width/2)-60, (height/3)+menubuffer);
+          text(i+") "+file_list.get(i).toString(), (width/2)-110, (height/3)+menubuffer);
           menubuffer = menubuffer+60;
         }
         menubuffer = 35;
@@ -261,8 +261,12 @@ void mousePressed(){
 }
 
 void keyPressed() {
-    if(menu == 1 && key != ENTER){
+    if(menu == 1 && key != ENTER && keyCode != SHIFT){
       answer = answer + key;
+      if (answer.equals("?")){
+        answer = "";
+      }
+      println(answer);
     } 
     if(key == BACKSPACE && menu == 1){
       println("BACK");
@@ -363,9 +367,11 @@ String [] get_question(){
 }
 
 boolean check_answer(String candidate){
+  String base = liner[2].toLowerCase();
+  String cand = candidate.toLowerCase();
   println(liner[2]);
   println(candidate);
-  if (candidate.equals(liner[2])){
+  if (cand.equals(base)){
     return true;
   } else{
     return false;
