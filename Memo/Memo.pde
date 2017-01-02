@@ -14,10 +14,12 @@ int menubuffer = 35;
 boolean hand_check = false;
 boolean file_not_found_error = false;
 boolean hit_check = false;
+boolean corr_check = false;
 int fnferror_countdown = 30;
 float hitcountdown = 15;
+float corrcountdown = 15;
 int score = 0;
-int skipcount = 3;
+int lifecount = 3;
 int charac_oscillate;
 int xhitpos = 540;
 boolean charac_up = false;
@@ -26,7 +28,9 @@ Star [] stars = new Star[500];
 String [] retstring = {};
 Hero hero = new Hero();
 boolean question_answered = false;
-String answer;
+String answer = "";
+boolean corr_ans = true;
+String [] liner;
 
 void setup(){
     size(1080, 720);
@@ -131,16 +135,30 @@ void draw(){
           hero.hit();
           hitcountdown--;
         } else{
+          hit_check = false;
           hero.update();
           hitcountdown = 15;
         }
+        if (corr_check == true && corrcountdown > 0){
+          textAlign(CENTER);
+          textFont(f, 60);
+          text("CORRECT!", width/2, height/4);
+          corrcountdown--;
+        } else{
+          corr_check = false;
+          corrcountdown = 15;
+        }
+        
         for (Star star : stars) {
           star.update();
         }
-        String [] liner = get_question();
+        liner = get_question();
         textFont(f, 25);
+        textAlign(LEFT);
         text("UNIT: "+liner[0], 40, 640);
         text("Your Answer: _________________", 40, 670);
+        textFont(f, 20);
+        text(answer, 200, 668);
         textFont(f, 50);
         textAlign(CENTER);
         text("Q: "+liner[1], width/2, 340);
@@ -148,9 +166,33 @@ void draw(){
         stroke(0);
         strokeWeight(1);
         textAlign(LEFT);
-        textFont(f, 25);
-        text("Score: "+score, 50, 40);
-        text("Number of skips left: "+skipcount, 50, 70);
+        textFont(f, 30);
+        text("Score: "+score, 40, 50);
+        text("Number of lives left: "+lifecount, 40, 80);
+    }
+    else if (menu == 2){
+      background(255,0,0);
+      textAlign(CENTER);
+      fill(255);
+      textFont(f, 60);
+      text("GAME OVER", width/2, height/4);
+      textFont(f, 40);
+      text("Your Final Score: "+score, width/2, height/3);
+      strokeWeight(1);
+      stroke(255);
+      fill(255,0,0);
+      rectMode(CENTER);
+      rect(width/2,(height/3)+210,width/4,height/16, 8);
+      if (mouseX > 400 && mouseX < 680 && mouseY > 425 && mouseY < 475){
+        hand_check = true;
+        strokeWeight(5);
+        stroke(255);
+        fill(255,0,0);
+        rect(width/2,(height/3)+210,width/4,height/16, 8);
+      }
+      fill(255);
+      textFont(f, 20);
+      text("TRY AGAIN?", (width/2), (height/3)+215);
     }
 }
 
@@ -211,8 +253,44 @@ void mousePressed(){
       e.printStackTrace();
       file_not_found_error = true;
     }
-    
   }
+  if (menu == 2 && mouseX > 400 && mouseX < 680 && mouseY > 425 && mouseY < 475){
+    reset();
+    println("YES");
+  }  
+}
+
+void keyPressed() {
+    if(menu == 1 && key != ENTER){
+      answer = answer + key;
+    } 
+    if(key == BACKSPACE && menu == 1){
+      println("BACK");
+      if (answer.length() > 1){
+        answer = answer.substring(0, answer.length() - 2);
+      }
+    } 
+    if(key == ENTER && menu == 1){
+      corr_ans = check_answer(answer);
+      if (corr_ans == true){
+        if (score < 30){
+          score = score+2;
+        } else if (score >=30 && score < 90){
+          score = score+4;
+        } else if (score >= 90){
+          score = score+6;
+        }
+        corr_check = true;
+        question_answered = false;
+      } else{
+        lifecount--;
+        hit_check = true;
+        if (lifecount == 0){
+          menu = 2;
+        }
+      }
+      answer = "";
+    }
 }
 
 // This function returns all the files in a directory as an array of Strings  
@@ -229,20 +307,70 @@ void listFileNames(String dir) {
   } 
 }
 
+void reset(){
+  file_list = new ArrayList();
+  line_list = new ArrayList();
+  menu = 0;
+  menubuffer = 35;
+  hand_check = false;
+  file_not_found_error = false;
+  hit_check = false;
+  corr_check = false;
+  fnferror_countdown = 30;
+  hitcountdown = 15;
+  corrcountdown = 15;
+  score = 0;
+  lifecount = 3;
+  xhitpos = 540;
+  charac_up = false;
+  charac_left = false;
+  stars = new Star[500];
+  hero = new Hero();
+  question_answered = false;
+  answer = "";
+  corr_ans = true;
+  setup();
+}
+
 String [] get_question(){
   if(question_answered == false){
+    println("Question not answered");
+    int diffrange = 0;
+    int randindex = 0;
     if (score < 30){
-      int randindex = int(random(1, mediumindex));
-      String quest_line = line_list.get(randindex).toString();
-      retstring = quest_line.split(",");
+      diffrange = 1;
+    } else if (score >=30 && score < 90){
+      diffrange = 2;
+    } else if (score >= 90){
+      diffrange = 3;
     }
+    int diffchoose = int(random(1, diffrange+1));
+    if (diffchoose == 1){
+      randindex = int(random(1, mediumindex));
+    } else if (diffchoose == 2){
+      randindex = int(random(mediumindex+1, hardindex));
+    } else if (diffchoose == 3){
+      randindex = int(random(hardindex+1, line_list.size()));
+    }
+    println(diffrange, randindex, line_list.size());
+    String quest_line = line_list.get(randindex).toString();
+    retstring = quest_line.split(",");
     question_answered = true;
-  }
+  } /*else{
+    println("Question is answered");
+  }*/
   return retstring;
 }
 
-//String check_answer(){
-//}
+boolean check_answer(String candidate){
+  println(liner[2]);
+  println(candidate);
+  if (candidate.equals(liner[2])){
+    return true;
+  } else{
+    return false;
+  }
+}
 
 void read_file(String filename){
     println(filename);
