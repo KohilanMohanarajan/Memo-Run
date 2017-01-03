@@ -15,4 +15,5 @@ I will try and update the game as much as possible within my free time, adding n
 - Music/Audio (STATUS: Incomplete)
 - Changing the formatting of the .txt file (STATUS: Incomplete)
 - Graphics overhaul (STATUS: Incomplete)
+- MacOS optimization (STATUS: Incomplete)
 - and More
