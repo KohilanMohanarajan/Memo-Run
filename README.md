@@ -19,5 +19,7 @@ I will try and update the game as much as possible within my free time, adding n
 - and More
 
 # Changelog
-- V 1.01
+- 1.01
   - Added documentation to the source code, cleaned up the code
+- 1.02
+  - Changed score calculation method, as well as fixed some bugs with backspace key
