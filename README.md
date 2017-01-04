@@ -13,7 +13,7 @@ If there are any issues with the game, or if anything crashes, please do contact
 #Updates
 I will try and update the game as much as possible within my free time, adding new features and functionality.  Here are some things that I've planned to eventually include:
 - Music/Audio (STATUS: Incomplete)
-- Changing the formatting of the .txt file (STATUS: Incomplete)
+- Changing the formatting of the .txt file (STATUS: Complete)
 - Graphics overhaul (STATUS: Incomplete)
 - MacOS optimization (STATUS: Incomplete)
 - and More
@@ -22,4 +22,6 @@ I will try and update the game as much as possible within my free time, adding n
 - 1.01
   - Added documentation to the source code, cleaned up the code
 - 1.02
-  - Changed score calculation method, as well as fixed some bugs with backspace key
+  - Changed score calculation method
+  - Fixed some bugs with backspace key
+  - Changed .txt file formatting to account for commas in the user's questions/answers
