@@ -70,7 +70,9 @@ int fieerror_countdown = 30;
 // String that contains the name of the file to be read
 String filereader;
 // The current version number
-float version_num = 1.01;
+float version_num = 1.02;
+// The amount the score increases by per correct answer
+int scoreinc = 0;
 
 
 void setup(){
@@ -396,7 +398,7 @@ void mousePressed(){
 /*---------------------------------------- Key Press Functions ----------------------------------------------*/
 void keyPressed() {
     // Read the user's answer input
-    if(menu == 1 && key != ENTER && keyCode != SHIFT){
+    if(menu == 1 && key != ENTER && keyCode != SHIFT && key != BACKSPACE){
       // Add the inputted key onto the answer string
       answer = answer + key;
       println(answer+answer.length());
@@ -404,8 +406,8 @@ void keyPressed() {
     // Read a backspace input
     if(key == BACKSPACE && menu == 1){
       println("BACK "+answer.length());
-      if (answer.length() > 1){
-        answer = answer.substring(0, answer.length() - 2);
+      if (answer.length() > 0){
+        answer= answer.substring(0, max(0, answer.length()-1));
       }
     }
     // Read an Enter input
@@ -414,12 +416,16 @@ void keyPressed() {
       corr_ans = check_answer(answer);
       if (corr_ans == true){
         // Add to the score
-        if (score < 30){
-          score = score+2;
-        } else if (score >=30 && score < 90){
+        
+        //if (score < 30){
+        score = score+scoreinc;
+        /*} else if (score >=30 && score < 90){
           score = score+4;
         } else if (score >= 90){
           score = score+6;
+        }*/
+        if (score >= 100 && score <= 102){
+          lifecount++;
         }
         // Toggle the Correct Answer text
         corr_check = true;
@@ -504,10 +510,13 @@ String [] get_question(){
     // Get a random line from the list pertaining to the difficulty
     if (diffchoose == 1){
       randindex = int(random(1, mediumindex));
+      scoreinc = 2;
     } else if (diffchoose == 2){
       randindex = int(random(mediumindex+1, hardindex));
+      scoreinc = 4;
     } else if (diffchoose == 3){
       randindex = int(random(hardindex+1, line_list.size()));
+      scoreinc = 6;
     }
     println(diffrange, randindex, line_list.size());
     // Cast the line to a string to process it

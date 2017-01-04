@@ -1,8 +1,8 @@
-Thing to Remember,Question,Answer
+Thing to Remember // Question // Answer
 EASY
-powret,wwerwtwre,1
-rweg,hrteherhjerth,2
+powret // wwerwtwre // 1
+rweg // hrteherhjerth // 2
 MEDIUM
-rewgewg,ergweytyt,3
+rewgewg // ergweytyt // 3
 HARD
-nergergerg,ergertywerw,erterter
+nergergerg // ergertywerw // erterter
