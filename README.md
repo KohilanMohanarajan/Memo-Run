@@ -17,3 +17,7 @@ I will try and update the game as much as possible within my free time, adding n
 - Graphics overhaul (STATUS: Incomplete)
 - MacOS optimization (STATUS: Incomplete)
 - and More
+
+# Changelog
+- V 1.01
+  - Added documentation to the source code, cleaned up the code
