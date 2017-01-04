@@ -94,6 +94,8 @@ float version_num = 1.01f;
 public void setup(){
     // Screen size of 1080 width by 720 height
     
+    // Frame title
+    surface.setTitle("Memo Run - Created by Kohilan Mohanarajan"); 
     // Determines the y-position of the character unit
     charac_oscillate = height-70;
     // Determines the framerate of the application
@@ -529,7 +531,11 @@ public String [] get_question(){
     // Cast the line to a string to process it
     String quest_line = line_list.get(randindex).toString();
     // Create an array of strings containing each element of the line
-    retstring = quest_line.split(",");
+    retstring = quest_line.split("//");
+    // Trims leading and trailing whitespace from the elements of the list
+    for (int i = 0; i < retstring.length;i++){
+      retstring[i] = retstring[i].trim();
+    }
     // Toggle the switch so that a new question isn't chosen each frame
     question_answered = true;
   } 
@@ -633,7 +639,8 @@ class Hero{
     } else if(xhitpos == 540-4 && charac_left == true){
       charac_left = false;
     }
-    fill(255);
+    fill(255,0,0);
+    stroke(255,0,0);
     rectMode(CENTER);
     rect(xhitpos, 650, 40, 40);
   }
