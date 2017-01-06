@@ -16,6 +16,8 @@ I will try and update the game as much as possible within my free time, adding n
 - Changing the formatting of the .txt file (STATUS: Complete)
 - Graphics overhaul (STATUS: Incomplete)
 - MacOS optimization (STATUS: Incomplete)
+- Adding Multiple Choice Questions (STATUS: Incomplete)
+- Adding more gameplay features (STATUS: Incomplete)
 - and More
 
 # Changelog
