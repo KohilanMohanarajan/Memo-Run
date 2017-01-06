@@ -70,7 +70,7 @@ int fieerror_countdown = 30;
 // String that contains the name of the file to be read
 String filereader;
 // The current version number
-float version_num = 1.02;
+float version_num = 1.0201;
 // The amount the score increases by per correct answer
 int scoreinc = 0;
 
@@ -634,6 +634,7 @@ class Hero{
     stroke(255,0,0);
     rectMode(CENTER);
     rect(xhitpos, 650, 40, 40);
+    fill(255);
   }
 }
 // The class containing the star object
